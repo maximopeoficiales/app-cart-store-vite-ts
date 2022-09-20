@@ -1,0 +1,11 @@
+(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const r of document.querySelectorAll('link[rel="modulepreload"]'))c(r);new MutationObserver(r=>{for(const n of r)if(n.type==="childList")for(const i of n.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&c(i)}).observe(document,{childList:!0,subtree:!0});function o(r){const n={};return r.integrity&&(n.integrity=r.integrity),r.referrerpolicy&&(n.referrerPolicy=r.referrerpolicy),r.crossorigin==="use-credentials"?n.credentials="include":r.crossorigin==="anonymous"?n.credentials="omit":n.credentials="same-origin",n}function c(r){if(r.ep)return;r.ep=!0;const n=o(r);fetch(r.href,n)}})();const l=e=>{const t=document.querySelector(e);if(t)return t;throw new Error("Element not found")},d=(e,t)=>{const o=e.querySelector(t);if(o)return o;throw new Error("Element not found")},m=l("#carrito"),p=l("#lista-cursos"),s=l("#lista-carrito tbody"),g=l("#vaciar-carrito");let a=[];h();function h(){p.addEventListener("click",y),m.addEventListener("click",E),g.addEventListener("click",f)}function y(e){e.preventDefault();const t=e;if(console.log(t.target.parentElement.parentElement),t.target.classList.contains("agregar-carrito")){const o=t.target.parentElement.parentElement;C(o)}}function C(e){var o,c,r;const t={imagen:d(e,"img").src,titulo:(o=d(e,"h4").textContent)!=null?o:"",precio:(c=e.querySelector(".precio span").textContent)!=null?c:"",id:parseInt((r=d(e,"a").getAttribute("data-id"))!=null?r:"0"),cantidad:1};a.some(n=>n.id===t.id)?a=[...a.map(i=>(i.id===t.id&&i.cantidad++,i))]:a=[...a,t],u()}function E(e){var o;e.preventDefault();const t=e;if(t.target.classList.contains("borrar-curso")){const c=parseInt((o=t.target.getAttribute("data-id"))!=null?o:"0");a=a.filter(r=>r.id!==c),u()}}function u(){f(),a.forEach(e=>{const t=document.createElement("tr");t.innerHTML=`
+               <td>  
+                    <img src="${e.imagen}" width=100>
+               </td>
+               <td>${e.titulo}</td>
+               <td>${e.precio}</td>
+               <td>${e.cantidad} </td>
+               <td>
+                    <a href="#" class="borrar-curso" data-id="${e.id}">X</a>
+               </td>
+          `,s.appendChild(t)})}function f(){for(;s.firstChild;)s.removeChild(s.firstChild)}
